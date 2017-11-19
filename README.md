@@ -8,7 +8,7 @@ If you have been provided with binaries then place the zip files in which they w
 
 ## Instructions
 
-Source your AWS creds. 
+Source your AWS creds.
 
 ```
 git clone vault-pov && cd vault-pov
@@ -16,4 +16,20 @@ cp ~/Downloads/consul*.zip binaries/
 cp ~/Downloads/vault*.zip binaries/
 terraform plan
 terraform apply
+```
+
+## Caveats
+
+Use username ubuntu for Ubuntu, centos for Centos deploys.  Only tested on the latest version of both.
+
+## Next steps
+
+This deployment does not use TLS.  You should absolutely use TLS!  Set the appropriate hostnames, generate and sign CSRs.  After you have the appropriate certificate and key file you can update your Vault config.
+
+```
+listener "tcp" {
+  address       = "0.0.0.0:8200"
+  tls_cert_file = "/etc/certs/vault.crt"
+  tls_key_file  = "/etc/certs/vault.key"
+}
 ```
