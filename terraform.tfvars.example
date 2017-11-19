@@ -1,0 +1,9 @@
+region  = "us-east-1"
+
+cluster_size = "3"
+
+instance_type = "t2.micro"
+
+key_name = "my-key"
+
+ssh_user = "ubuntu"
