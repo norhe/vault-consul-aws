@@ -6,14 +6,19 @@ logger() {
   echo "$DT $0: $1"
 }
 
-logger "Running"
+logger "Installing Consul...\nChecking for existing file"
 
-CONSUL_VERSION="$(curl -s https://releases.hashicorp.com/consul/index.json | jq -r '.versions[].version' | grep -v 'beta\|rc' | tail -n 1)"
-CONSUL_ZIP="consul_${CONSUL_VERSION}_linux_amd64.zip"
-CONSUL_URL=${URL:-"https://releases.hashicorp.com/consul/${CONSUL_VERSION}/${CONSUL_ZIP}"}
+if  [ -e consul*zip -o consul ] then
+  CONSUL_ZIP=(find /tmp/ -name consul* -printf "%f")
+  echo "Found local file: $CONSUL_ZIP"
+else
+  CONSUL_VERSION="$(curl -s https://releases.hashicorp.com/consul/index.json | jq -r '.versions[].version' | grep -v 'beta\|rc' | tail -n 1)"
+  CONSUL_ZIP="consul_${CONSUL_VERSION}_linux_amd64.zip"
+  CONSUL_URL=${URL:-"https://releases.hashicorp.com/consul/${CONSUL_VERSION}/${CONSUL_ZIP}"}
 
-logger "Downloading consul ${CONSUL_VERSION}"
-curl --silent --output /tmp/${CONSUL_ZIP} ${CONSUL_URL}
+  logger "Downloading consul ${CONSUL_VERSION}"
+  curl --silent --output /tmp/${CONSUL_ZIP} ${CONSUL_URL}
+fi
 
 logger "Installing consul"
 sudo unzip -o /tmp/${CONSUL_ZIP} -d /usr/local/bin/
@@ -24,7 +29,7 @@ sudo mkdir -pm 0755 /opt/consul/data
 
 logger "/usr/local/bin/consul --version: $(/usr/local/bin/consul --version)"
 
-logger "Configuring consul ${CONSUL_VERSION}"
+logger "Configuring consul"
 sudo cp /tmp/consul/config/* /etc/consul.d/
 sudo chown -R consul:consul /etc/consul.d /opt/consul
 sudo chmod -R 0644 /etc/consul.d/*
