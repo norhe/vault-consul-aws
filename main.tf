@@ -89,12 +89,19 @@ resource "aws_instance" "pov-server" {
   associate_public_ip_address = true
 
   connection {
-    user  = "ubuntu"
+    user  = "{var.ssh_user}"
     agent = true     # use ssh_agent, i.e. `ssh-add /path/to/key`
   }
 
+  # upload necessary scripts
   provisioner "file" {
     source      = "./scripts/"
+    destination = "/tmp"
+  }
+
+  # upload zips if proivded
+  provisioner "file" {
+    source      = "./binaries/"
     destination = "/tmp"
   }
 
@@ -111,7 +118,7 @@ resource "aws_instance" "pov-server" {
       "sudo systemctl enable consul.service",
       "sudo systemctl start consul",
       "sudo systemctl enable vault.service",
-      "sudo systemctl start vault",
+      "sudo systemctl start vault"
     ]
   }
 }

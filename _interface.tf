@@ -16,3 +16,9 @@ variable "instance_type" {
 variable "key_name" {
   description = "The pre-existing SSH key to use to authenticate to the deployed VMs"
 }
+
+# Outputs
+
+output "vault-servers" {
+  value = ["${aws_instance.pov-server.*.public_dns}"]
+}
