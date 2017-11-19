@@ -8,8 +8,9 @@ logger() {
 
 logger "Installing Vault...\nChecking for existing file"
 
-if  [ -e vault*zip ] then
-  VAULT_ZIP=(find /tmp/ -name vault* -printf "%f")
+if  [ -e vault*zip ]
+then
+  VAULT_ZIP=$(find /tmp/ -name vault* -printf "%f")
   echo "Found local file: $VAULT_ZIP"
 else
   VAULT_VERSION="$(curl -s https://releases.hashicorp.com/vault/index.json | jq -r '.versions[].version' | grep -v 'beta\|rc' | tail -n 1)"

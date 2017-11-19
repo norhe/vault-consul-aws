@@ -8,8 +8,9 @@ logger() {
 
 logger "Installing Consul...\nChecking for existing file"
 
-if  [ -e consul*zip -o consul ] then
-  CONSUL_ZIP=(find /tmp/ -name consul* -printf "%f")
+if  [ -e consul*zip ]
+then
+  CONSUL_ZIP=$(find /tmp/ -name consul* -printf "%f")
   echo "Found local file: $CONSUL_ZIP"
 else
   CONSUL_VERSION="$(curl -s https://releases.hashicorp.com/consul/index.json | jq -r '.versions[].version' | grep -v 'beta\|rc' | tail -n 1)"
