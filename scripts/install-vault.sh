@@ -8,7 +8,7 @@ logger() {
 
 logger "Installing Vault...\nChecking for existing file"
 
-if  [ -e vault*zip ]
+if ls /tmp/vault*zip 1> /dev/null 2>&1;
 then
   VAULT_ZIP=$(find /tmp/ -name vault* -printf "%f")
   echo "Found local file: $VAULT_ZIP"

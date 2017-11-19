@@ -8,7 +8,7 @@ logger() {
 
 logger "Installing Consul...\nChecking for existing file"
 
-if  [ -e consul*zip ]
+if ls /tmp/consul*zip 1> /dev/null 2>&1;
 then
   CONSUL_ZIP=$(find /tmp/ -name consul* -printf "%f")
   echo "Found local file: $CONSUL_ZIP"

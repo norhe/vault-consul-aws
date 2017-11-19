@@ -17,6 +17,10 @@ variable "key_name" {
   description = "The pre-existing SSH key to use to authenticate to the deployed VMs"
 }
 
+variable "ssh_user" {
+  description = "Username for SSH connections used during provisioning."
+}
+
 # Outputs
 
 output "vault-servers" {
