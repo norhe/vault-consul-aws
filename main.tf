@@ -90,7 +90,7 @@ resource "aws_instance" "pov-server" {
 
   connection {
     user  = "${var.ssh_user}"
-    agent = true              # use ssh_agent, i.e. `ssh-add /path/to/key`
+    private_key = "${var.private_key}"              # use ssh_agent, i.e. `ssh-add /path/to/key`
   }
 
   # upload necessary scripts

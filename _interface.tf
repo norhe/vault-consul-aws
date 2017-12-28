@@ -21,6 +21,9 @@ variable "ssh_user" {
   description = "Username for SSH connections used during provisioning."
 }
 
+variable "private_key" {
+  description = "The contents of the private key"
+}
 # Outputs
 
 output "vault-servers" {
